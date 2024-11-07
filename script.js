@@ -62,14 +62,23 @@ function updateHandDisplay(isInitial = false) {
     }
     
     document.getElementById("player-score").textContent = `Punkte: ${calculateScore(playerHand)}`;
-    document.getElementById("dealer-score").textContent = `Punkte: ${calculateScore(dealerHand)}`;
+    
+    // Berechne den Punktestand des Hauses nur, wenn die Karte aufgedeckt ist
+    let dealerScore = calculateScore(dealerHand, isInitial);
+    document.getElementById("dealer-score").textContent = `Punkte: ${dealerScore}`;
 }
 
-function calculateScore(hand) {
+function calculateScore(hand, isInitial = false) {
     let score = 0;
     let aceCount = 0;
     
     for (let card of hand) {
+        // Berechne Punkte nur für Karten, die sichtbar sind
+        if (isInitial && hand.indexOf(card) === 1) {
+            // Ignoriere die zweite Karte des Hauses, wenn sie noch verdeckt ist
+            continue;
+        }
+        
         if (card.value === 'A') {
             aceCount++;
             score += 11;
@@ -122,7 +131,7 @@ function stay() {
 
 function determineWinner() {
     let playerScore = calculateScore(playerHand);
-    let dealerScore = calculateScore(dealerHand);
+    let dealerScore = calculateScore(dealerHand, false); // Keine verdeckten Karten mehr bei der Auswertung
     
     if (dealerScore > 21 || playerScore > dealerScore) {
         document.getElementById("game-message").textContent = "Du hast gewonnen!";
