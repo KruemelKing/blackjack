@@ -54,12 +54,12 @@ function updateHandDisplay(isInitial = false) {
     // Zeige alle Karten des Spielers
     playerCards.innerHTML = playerHand.map(card => `${card.value}${card.suit}`).join(" ");
     
-    // Zeige nur die erste Karte des Hauses, wenn es der Anfang ist
+    // Zeige nur die erste Karte des Hauses zu Beginn
     if (isInitial) {
         dealerCards.innerHTML = `${dealerHand[0].value}${dealerHand[0].suit} [Karte verdeckt]`;
     } else {
-        // Zeige alle Karten des Hauses, wenn das Spiel zu Ende ist oder der Spieler bleibt
-        dealerCards.innerHTML = dealerHand.map(card => `${card.value}${card.suit}`).join(" ");
+        // Zeige die Karten des Hauses nur wenn der Spieler bleibt
+        dealerCards.innerHTML = `${dealerHand[0].value}${dealerHand[0].suit} ${dealerHand[1].value}${dealerHand[1].suit}`;
     }
     
     document.getElementById("player-score").textContent = `Punkte: ${calculateScore(playerHand)}`;
