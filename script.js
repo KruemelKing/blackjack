@@ -58,7 +58,7 @@ function updateHandDisplay(isInitial = false) {
     if (isInitial) {
         dealerCards.innerHTML = `${dealerHand[0].value}${dealerHand[0].suit} [Karte verdeckt]`;
     } else {
-        // Zeige die Karten des Hauses nur wenn der Spieler bleibt
+        // Zeige die Karten des Hauses, wenn der Spieler auf "Bleiben" klickt
         dealerCards.innerHTML = `${dealerHand[0].value}${dealerHand[0].suit} ${dealerHand[1].value}${dealerHand[1].suit}`;
     }
     
