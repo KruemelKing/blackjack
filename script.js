@@ -20,7 +20,7 @@ function initGame() {
     dealerHand.push(drawCardFromDeck(), drawCardFromDeck());
     
     // Anzeigen der Karten (nur eine Karte des Hauses wird zu Beginn gezeigt)
-    updateHandDisplay(true);
+    updateHandDisplay(true);  // Anfangsanzeige mit verdeckter Hauskarte
     checkBlackjack();
 }
 
@@ -110,7 +110,7 @@ function checkBlackjack() {
 function drawCard() {
     if (gameOver) return;
     playerHand.push(drawCardFromDeck());
-    updateHandDisplay();
+    updateHandDisplay(false);  // Jetzt die zweite Hauskarte immer noch verdeckt
     
     if (calculateScore(playerHand) > 21) {
         document.getElementById("game-message").textContent = "Du hast über 21! Du hast verloren!";
@@ -125,7 +125,7 @@ function stay() {
         dealerHand.push(drawCardFromDeck());
     }
     
-    updateHandDisplay(false); // Jetzt das vollständige Display der Hauskarten
+    updateHandDisplay(false); // Jetzt das vollständige Display der Hauskarten, Karte wird aufgedeckt
     determineWinner();
 }
 
