@@ -19,8 +19,8 @@ function initGame() {
     playerHand.push(drawCardFromDeck(), drawCardFromDeck());
     dealerHand.push(drawCardFromDeck(), drawCardFromDeck());
     
-    // Anzeigen der Karten
-    updateHandDisplay();
+    // Anzeigen der Karten (nur eine Karte des Hauses wird zu Beginn gezeigt)
+    updateHandDisplay(true);
     checkBlackjack();
 }
 
@@ -47,12 +47,19 @@ function drawCardFromDeck() {
     return deck.pop();
 }
 
-function updateHandDisplay() {
+function updateHandDisplay(isInitial = false) {
     let playerCards = document.getElementById("player-cards");
     let dealerCards = document.getElementById("dealer-cards");
     
+    // Zeige alle Karten des Spielers
     playerCards.innerHTML = playerHand.map(card => `${card.value}${card.suit}`).join(" ");
-    dealerCards.innerHTML = dealerHand.map(card => `${card.value}${card.suit}`).join(" ");
+    
+    // Zeige nur die erste Karte des Hauses, wenn es der Anfang ist
+    if (isInitial) {
+        dealerCards.innerHTML = `${dealerHand[0].value}${dealerHand[0].suit} [Karte verdeckt]`;
+    } else {
+        dealerCards.innerHTML = dealerHand.map(card => `${card.value}${card.suit}`).join(" ");
+    }
     
     document.getElementById("player-score").textContent = `Punkte: ${calculateScore(playerHand)}`;
     document.getElementById("dealer-score").textContent = `Punkte: ${calculateScore(dealerHand)}`;
@@ -109,7 +116,7 @@ function stay() {
         dealerHand.push(drawCardFromDeck());
     }
     
-    updateHandDisplay();
+    updateHandDisplay(false); // Jetzt das vollständige Display der Hauskarten
     determineWinner();
 }
 
